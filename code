@@ -1,0 +1,23 @@
+```{r}
+floods <- read.csv("~/R/floods.csv")
+floods <- floods[complete.cases(floods),]
+plot(floods$vul_index, floods$population, col=as.numeric(as.factor(floods$District)))
+dhaka <- floods[floods$District=="Dhaka",][-119,]
+plot(dhaka$vul_index, dhaka$population)
+fit <- lm(population~vul_index, data=dhaka)
+summary(fit)
+
+slope.null <- c()
+for (i in 1:1000)
+  slope.null[i] <- lm(population~sample(vul_index), data=dhaka)$coef[2]
+hist(slope.null)
+abline(v=fit$coef[2])
+```
+
+```{r}
+floods <- read.csv("~/R/floods.csv")
+floods <- floods[complete.cases(floods),]
+plot(floods$vul_index, floods$pov_rat, col=as.numeric(as.factor(floods$District)))
+dhaka <- floods[floods$District=="Chittagong",]
+plot(dhaka$vul_index, dhaka$pov_rat)
+```
